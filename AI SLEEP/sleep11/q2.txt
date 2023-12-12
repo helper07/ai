@@ -1,0 +1,42 @@
+def water_jug_problem():
+    jug1_capacity = 4
+    jug2_capacity = 3
+    target_amount = 2
+
+    jug1_current = 0
+    jug2_current = 0
+
+    while jug2_current != target_amount:
+        if jug2_current == target_amount:
+            break
+
+        if jug1_current == 0:
+            jug1_current = jug1_capacity
+
+        pour_amount = min(jug1_current, jug2_capacity - jug2_current)
+        jug1_current -= pour_amount
+        jug2_current += pour_amount
+
+        print(f"Pour {pour_amount} gallons from Jug 1 to Jug 2")
+
+        if jug2_current == target_amount:
+            break
+
+        if jug2_current == jug2_capacity:
+            jug2_current = 0
+
+            print("Empty Jug 2")
+
+        if jug1_current == 0:
+            jug1_current = jug1_capacity
+
+        pour_amount = min(jug2_current, jug1_capacity - jug1_current)
+        jug2_current -= pour_amount
+        jug1_current += pour_amount
+
+        print(f"Pour {pour_amount} gallons from Jug 2 to Jug 1")
+
+    print("Target amount of 2 gallons achieved in Jug 2.")
+
+if __name__ == "__main__":
+    water_jug_problem()

@@ -1,0 +1,15 @@
+from itertools import permutations
+
+for perm in permutations('0123456789', 8):
+    T, W, O, F, U, R = map(int, perm)
+
+    if T == 0 or F == 0:
+        continue
+
+    two = T * 100 + W * 10 + O
+    four = F * 1000 + O * 100 + U * 10 + R
+
+    if two + two == four:
+        print(f"T = {T}, W = {W}, O = {O}, F = {F}, U = {U}, R = {R}")
+        print(f"TWO + TWO = FOUR: {two} + {two} = {four}")
+        break

@@ -1,0 +1,20 @@
+from itertools import permutations
+
+def is_valid_assignment(assignment):
+    send, more, money = assignment
+    return send + more == money
+
+def solve_cryptarithmetic():
+    for permutation in permutations('9876543210', 8):
+        send = int(''.join(permutation[:4]))
+        more = int(''.join(permutation[4:8]))
+        money = int(''.join(permutation[8:]))
+
+        if is_valid_assignment((send, more, money)):
+            print(f"Solution found: SEND = {send}, MORE = {more}, MONEY = {money}")
+            return
+
+    print("No solution found.")
+
+if __name__ == "__main__":
+    solve_cryptarithmetic()

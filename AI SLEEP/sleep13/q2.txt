@@ -1,0 +1,31 @@
+def is_safe(board, row, col):
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if board[i] == col:
+            return False
+
+        # Check if there is a queen in the same diagonal
+        if abs(board[i] - col) == abs(i - row):
+            return False
+
+    return True
+
+def print_solution(board):
+    for row in board:
+        print(" ".join(["Q" if col == row else "." for col in range(8)]))
+    print()
+
+def solve_n_queens(board, row):
+    if row == 8:
+        print_solution(board)
+        return
+
+    for col in range(8):
+        if is_safe(board, row, col):
+            board[row] = col
+            solve_n_queens(board, row + 1)
+            board[row] = -1  # Backtrack
+
+if __name__ == "__main__":
+    initial_board = [-1] * 8
+    solve_n_queens(initial_board, 0)

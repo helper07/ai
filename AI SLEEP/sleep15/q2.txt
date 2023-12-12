@@ -1,0 +1,59 @@
+class Node:
+    def __init__(self, name):
+        self.name = name
+        self.children = []
+
+    def add_child(self, child):
+        self.children.append(child)
+
+def iterative_deepening_dfs(root, goal_node_name, max_depth):
+    for depth in range(max_depth + 1):
+        visited = set()
+        result = depth_limited_dfs(root, goal_node_name, depth, visited)
+        if result:
+            return result
+
+    return None
+
+def depth_limited_dfs(node, goal_node_name, depth, visited):
+    if depth < 0:
+        return None
+
+    visited.add(node.name)
+
+    if node.name == goal_node_name:
+        return node
+
+    for child in node.children:
+        if child.name not in visited:
+            result = depth_limited_dfs(child, goal_node_name, depth - 1, visited)
+            if result:
+                return result
+
+    return None
+
+if __name__ == "__main__":
+    A = Node("A")
+    B = Node("B")
+    C = Node("C")
+    D = Node("D")
+    E = Node("E")
+    F = Node("F")
+    G = Node("G")
+
+    A.add_child(B)
+    A.add_child(C)
+    B.add_child(D)
+    B.add_child(E)
+    C.add_child(F)
+    C.add_child(G)
+
+    goal_node_name = "G"
+    max_depth = 3
+
+    result_node = iterative_deepening_dfs(A, goal_node_name, max_depth)
+
+    if result_node:
+        print(f"Goal node {goal_node_name} found.")
+    else:
+        print(f"Goal node {goal_node_name} not found within the specified depth.")

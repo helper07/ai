@@ -1,0 +1,36 @@
+class CollegeInfoBot:
+    def __init__(self, student_name, student_id, courses, grades):
+        self.student_name = student_name
+        self.student_id = student_id
+        self.courses = courses
+        self.grades = grades
+
+    def get_personal_info(self):
+        return f"Student Name: {self.student_name}\nStudent ID: {self.student_id}"
+
+    def get_courses(self):
+        return f"Courses: {', '.join(self.courses)}"
+
+    def get_grades(self):
+        return f"Grades: {', '.join([f'{course}: {grade}' for course, grade in zip(self.courses, self.grades)])}"
+
+    def get_gpa(self):
+        if self.grades:
+            average_grade = sum(self.grades) / len(self.grades)
+            return f"Overall GPA: {average_grade:.2f}"
+        else:
+            return "No grades available."
+
+if __name__ == "__main__":
+    student_name = input("Enter your name: ")
+    student_id = input("Enter your student ID: ")
+    courses = ["Math", "Physics", "Computer Science", "English"]
+    grades = [90, 85, 92, 88]
+
+    college_bot = CollegeInfoBot(student_name, student_id, courses, grades)
+
+    print("Welcome to College Info Bot!")
+    print(college_bot.get_personal_info())
+    print(college_bot.get_courses())
+    print(college_bot.get_grades())
+    print(college_bot.get_gpa())

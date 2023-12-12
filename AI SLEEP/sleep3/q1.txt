@@ -1,0 +1,7 @@
+punctuation_chars = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+
+input_string = input("Enter a string with punctuation: ")
+result_string = ''.join(char for char in input_string if char not in punctuation_chars)
+
+print("String without punctuation:")
+print(result_string)

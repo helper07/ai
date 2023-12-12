@@ -1,0 +1,28 @@
+def is_safe(board, row, col):
+    for i in range(row):
+        if board[i] == col or \
+           board[i] - i == col - row or \
+           board[i] + i == col + row:
+            return False
+    return True
+
+def print_solution(board):
+    for row in board:
+        print(" ".join(["Q" if col == row else "." for col in range(n)]))
+    print()
+
+def solve_n_queens(board, row):
+    if row == n:
+        print_solution(board)
+        return
+
+    for col in range(n):
+        if is_safe(board, row, col):
+            board[row] = col
+            solve_n_queens(board, row + 1)
+            board[row] = -1
+
+if __name__ == "__main__":
+    n = int(input("Enter the number of queens: "))
+    initial_board = [-1] * n
+    solve_n_queens(initial_board, 0)

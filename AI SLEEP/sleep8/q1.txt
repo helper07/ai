@@ -1,0 +1,13 @@
+user_input = input("Enter a string: ")
+
+upper_count = 0
+lower_count = 0
+
+for char in user_input:
+    if char.isupper():
+        upper_count += 1
+    elif char.islower():
+        lower_count += 1
+
+print(f"Number of upper case alphabets: {upper_count}")
+print(f"Number of lower case alphabets: {lower_count}")

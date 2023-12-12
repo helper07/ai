@@ -1,0 +1,24 @@
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+stop_words = set(stopwords.words('english'))
+
+# Read passage from a text file
+with open('your_text_file.txt', 'r') as file:
+    passage = file.read()
+
+# Tokenize the passage
+tokens = word_tokenize(passage)
+
+# Remove stop words
+filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+
+# Join the filtered tokens back into a string
+filtered_text = ' '.join(filtered_tokens)
+
+# Print the result
+print(filtered_text)

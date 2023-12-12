@@ -1,0 +1,40 @@
+from collections import defaultdict
+
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+        self.graph[v].append(u)  # Assuming an undirected graph
+
+def dfs(graph, start, goal, visited=None):
+    if visited is None:
+        visited = set()
+
+    visited.add(start)
+    print(f"Visited node {start}")
+
+    if start == goal:
+        print(f"Goal node {goal} found!")
+        return True
+
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            if dfs(graph, neighbor, goal, visited):
+                return True
+
+    return False
+
+if __name__ == "__main__":
+    # Create the graph
+    graph = Graph()
+    edges = [(1, 2), (1, 3), (2, 4), (2, 5), (3, 6), (3, 7)]
+
+    for edge in edges:
+        graph.add_edge(*edge)
+
+    # DFS from initial node 1 to goal node 7
+    initial_node = 1
+    goal_node = 7
+    dfs(graph.graph, initial_node, goal_node)

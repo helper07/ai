@@ -1,0 +1,13 @@
+import calendar
+
+year = int(input("Enter the year: "))
+month = int(input("Enter the month: "))
+
+cal = calendar.monthcalendar(year, month)
+for week in cal:
+    for day in week:
+        if day == 0:
+            print("   ", end=" ")
+        else:
+            print(f"{day:2} ", end=" ")
+    print()

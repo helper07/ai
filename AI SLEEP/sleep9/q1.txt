@@ -1,0 +1,69 @@
+import heapq
+import copy
+
+def get_neighbors(state):
+    neighbors = []
+    zero_pos = None
+
+    for i, row in enumerate(state):
+        for j, value in enumerate(row):
+            if value == 0:
+                zero_pos = (i, j)
+
+    moves = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+    for move in moves:
+        new_pos = (zero_pos[0] + move[0], zero_pos[1] + move[1])
+        if 0 <= new_pos[0] < 3 and 0 <= new_pos[1] < 3:
+            new_state = copy.deepcopy(state)
+            new_state[zero_pos[0]][zero_pos[1]] = state[new_pos[0]][new_pos[1]]
+            new_state[new_pos[0]][new_pos[1]] = 0
+            neighbors.append((new_state, move))
+    
+    return neighbors
+
+def manhattan_distance(state):
+    goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+    distance = 0
+
+    for i in range(3):
+        for j in range(3):
+            value = state[i][j]
+            if value != 0:
+                goal_pos = [(x, y) for x, row in enumerate(goal) for y, v in enumerate(row) if v == value][0]
+                distance += abs(i - goal_pos[0]) + abs(j - goal_pos[1])
+    
+    return distance
+
+def solve_puzzle(initial_state):
+    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+
+    priority_queue = [(manhattan_distance(initial_state), 0, initial_state)]
+    visited_states = set()
+
+    while priority_queue:
+        _, cost, current_state = heapq.heappop(priority_queue)
+
+        if current_state == goal_state:
+            return cost
+
+        if tuple(map(tuple, current_state)) in visited_states:
+            continue
+
+        visited_states.add(tuple(map(tuple, current_state)))
+
+        for neighbor, move in get_neighbors(current_state):
+            if tuple(map(tuple, neighbor)) not in visited_states:
+                new_cost = cost + 1 + manhattan_distance(neighbor)
+                heapq.heappush(priority_queue, (new_cost, cost + 1, neighbor))
+
+    return -1
+
+if __name__ == "__main__":
+    initial_state = [[2, 8, 3], [1, 6, 4], [7, 0, 5]]
+    result = solve_puzzle(initial_state)
+
+    if result != -1:
+        print(f"Minimum number of moves to solve the puzzle: {result}")
+    else:
+        print("The puzzle is unsolvable.")

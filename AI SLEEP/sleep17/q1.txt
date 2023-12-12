@@ -1,0 +1,30 @@
+import math
+
+def hill_climbing_algorithm(starting_point, step_size, max_iterations):
+    current_point = starting_point
+    current_value = mathematical_function(current_point)
+
+    for _ in range(max_iterations):
+        next_point = current_point + step_size
+        next_value = mathematical_function(next_point)
+
+        if next_value > current_value:
+            current_point = next_point
+            current_value = next_value
+        else:
+            break
+
+    return current_point, current_value
+
+def mathematical_function(x):
+    # Example mathematical function: f(x) = -x^2 + 4x
+    return -x**2 + 4*x
+
+if __name__ == "__main__":
+    starting_point = float(input("Enter the starting point: "))
+    step_size = float(input("Enter the step size: "))
+    max_iterations = int(input("Enter the maximum number of iterations: "))
+
+    max_point, max_value = hill_climbing_algorithm(starting_point, step_size, max_iterations)
+
+    print(f"The maximum value of the function is {max_value} at x = {max_point}")

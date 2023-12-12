@@ -1,0 +1,45 @@
+import heapq
+
+class RoomState:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.objects = []  # List of objects, each represented as (width, height)
+
+    def __lt__(self, other):
+        return self.heuristic() < other.heuristic()
+
+    def heuristic(self):
+        # Example heuristic: remaining area to be filled
+        filled_area = sum(obj[0] * obj[1] for obj in self.objects)
+        remaining_area = self.width * self.height - filled_area
+        return remaining_area
+
+def a_star_placement(room_width, room_height, rectangular_objects, square_objects):
+    initial_state = RoomState(room_width, room_height)
+    priority_queue = [initial_state]
+
+    while priority_queue:
+        current_state = heapq.heappop(priority_queue)
+
+        if current_state.heuristic() == 0:
+            print("Optimal arrangement found:")
+            print("Room Dimensions:", room_width, "x", room_height)
+            print("Objects:", current_state.objects)
+            return
+
+        for obj in rectangular_objects + square_objects:
+            new_state = RoomState(room_width, room_height)
+            new_state.objects = current_state.objects.copy()
+            new_state.objects.append(obj)
+
+            heapq.heappush(priority_queue, new_state)
+
+if __name__ == "__main__":
+    room_width = 10
+    room_height = 8
+
+    rectangular_objects = [(3, 2), (4, 3), (2, 1), (5, 2), (3, 4)]
+    square_objects = [(2, 2), (3, 3), (1, 1), (4, 4)]
+
+    a_star_placement(room_width, room_height, rectangular_objects, square_objects)

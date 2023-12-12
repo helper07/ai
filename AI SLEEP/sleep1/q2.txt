@@ -1,0 +1,41 @@
+from collections import defaultdict
+
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
+        self.graph[v].append(u)  # Assuming an undirected graph
+
+def dfs(graph, start, goal):
+    visited = set()
+    stack = [start]
+
+    while stack:
+        current_node = stack.pop()
+
+        if current_node == goal:
+            print(f"Goal node {goal} found!")
+            return True
+
+        if current_node not in visited:
+            print(f"Visited node {current_node}")
+            visited.add(current_node)
+            stack.extend(reversed(graph[current_node]))
+
+    print("Goal node not found.")
+    return False
+
+if __name__ == "__main__":
+    # Create the graph
+    graph = Graph()
+    edges = [(1, 2), (1, 3), (2, 4), (2, 5), (3, 6), (3, 7), (4, 8), (5, 8), (6, 8), (7, 8)]
+
+    for edge in edges:
+        graph.add_edge(*edge)
+
+    # DFS from initial node 1 to goal node 8
+    initial_node = 1
+    goal_node = 8
+    dfs(graph.graph, initial_node, goal_node)

@@ -1,0 +1,20 @@
+from itertools import permutations
+
+def is_valid_assignment(assignment):
+    cross, roads, danger = assignment
+    return cross + roads == danger
+
+def solve_cryptarithmetic():
+    for permutation in permutations('9876543210', 7):
+        cross = int(''.join(permutation[:5]))
+        roads = int(''.join(permutation[5:10]))
+        danger = int(''.join(permutation[10:]))
+
+        if is_valid_assignment((cross, roads, danger)):
+            print(f"Solution found: CROSS = {cross}, ROADS = {roads}, DANGER = {danger}")
+            return
+
+    print("No solution found.")
+
+if __name__ == "__main__":
+    solve_cryptarithmetic()

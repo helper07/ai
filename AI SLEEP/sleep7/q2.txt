@@ -1,0 +1,32 @@
+import random
+
+def get_response(user_input):
+    responses = {
+        "hello": ["Hi there!", "Hello!", "Hey!"],
+        "how are you": ["I'm good, thanks!", "I'm doing well.", "I'm fine, how about you?"],
+        "bye": ["Goodbye!", "See you later!", "Bye!"]
+    }
+
+    user_input = user_input.lower()
+
+    for keyword in responses:
+        if keyword in user_input:
+            return random.choice(responses[keyword])
+
+    return "I'm sorry, I don't understand that."
+
+def main():
+    print("Simple Chatbot: Hello! How can I help you today?")
+    
+    while True:
+        user_input = input("You: ")
+        
+        if user_input.lower() == "exit":
+            print("Simple Chatbot: Goodbye!")
+            break
+        
+        response = get_response(user_input)
+        print(f"Simple Chatbot: {response}")
+
+if __name__ == "__main__":
+    main()

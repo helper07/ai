@@ -1,0 +1,65 @@
+import heapq
+
+class Graph:
+    def __init__(self):
+        self.vertices = {}
+
+    def add_vertex(self, name, heuristic):
+        self.vertices[name] = heuristic
+
+    def add_edge(self, start, end, cost):
+        if start not in self.vertices:
+            raise ValueError(f"Vertex {start} not found in the graph.")
+        if end not in self.vertices:
+            raise ValueError(f"Vertex {end} not found in the graph.")
+        
+        if 'edges' not in self.vertices[start]:
+            self.vertices[start]['edges'] = []
+        self.vertices[start]['edges'].append((end, cost))
+
+    def a_star_algorithm(self, start, goal):
+        priority_queue = [(0, start)]
+        visited = set()
+
+        while priority_queue:
+            current_cost, current_vertex = heapq.heappop(priority_queue)
+
+            if current_vertex in visited:
+                continue
+
+            print(f"Visit {current_vertex}")
+
+            visited.add(current_vertex)
+
+            if current_vertex == goal:
+                print("Goal reached!")
+                break
+
+            if 'edges' in self.vertices[current_vertex]:
+                for neighbor, cost in self.vertices[current_vertex]['edges']:
+                    if neighbor not in visited:
+                        total_cost = current_cost + cost + self.vertices[neighbor]
+                        heapq.heappush(priority_queue, (total_cost, neighbor))
+
+if __name__ == "__main__":
+    graph = Graph()
+
+    graph.add_vertex('A', 5)
+    graph.add_vertex('B', 3)
+    graph.add_vertex('C', 2)
+    graph.add_vertex('D', 4)
+    graph.add_vertex('E', 1)
+    graph.add_vertex('F', 0)
+    graph.add_vertex('G', 7)
+
+    graph.add_edge('A', 'B', 3)
+    graph.add_edge('A', 'C', 2)
+    graph.add_edge('B', 'D', 4)
+    graph.add_edge('B', 'E', 1)
+    graph.add_edge('C', 'F', 0)
+    graph.add_edge('D', 'G', 7)
+
+    start_vertex = 'A'
+    goal_vertex = 'G'
+
+    graph.a_star_algorithm(start_vertex, goal_vertex)
